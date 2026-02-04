@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisión App</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container animate-in">
+        <header style="margin-bottom: 3rem;">
+            <h1>Panel de Control</h1>
+            <p>Gestiona las fichas de supervisión y locales de votación de manera eficiente.</p>
+        </header>
+
+        <section class="grid"
+            style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <!-- Ficha A Card -->
+            <a href="ficha_a.html" style="text-decoration: none;">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div
+                            style="background: rgba(59, 130, 246, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="3" x2="9" y2="21"></line>
+                            </svg>
+                        </div>
+                        <span
+                            style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Activo</span>
+                    </div>
+                    <h2>Ficha A</h2>
+                    <p style="margin-bottom: 1.5rem;">Supervisión a locales de votación (07.12.2025).</p>
+                    <div class="btn" style="width: 100%;">Abrir Ficha</div>
+                </div>
+            </a>
+
+            <!-- Ficha B Card -->
+            <a href="ficha_b.html" style="text-decoration: none;">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div
+                            style="background: rgba(139, 92, 246, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <span
+                            style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Activo</span>
+                    </div>
+                    <h2>Ficha B</h2>
+                    <p style="margin-bottom: 1.5rem;">Durante el sufragio y grupos vulnerables (08:00 - 15:00).</p>
+                    <div class="btn" style="width: 100%;">Abrir Ficha</div>
+                </div>
+            </a>
+
+            <!-- Ficha C Card -->
+            <a href="ficha_c.html" style="text-decoration: none;">
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div
+                            style="background: rgba(236, 72, 153, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ec4899;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </div>
+                        <span
+                            style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Activo</span>
+                    </div>
+                    <h2>Ficha C</h2>
+                    <p style="margin-bottom: 1.5rem;">Conteo de votos y transparencia (15:00 - 17:00).</p>
+                    <div class="btn" style="width: 100%;">Abrir Ficha</div>
+                </div>
+            </a>
+        </section>
+    </div>
+</body>
+
+</html>

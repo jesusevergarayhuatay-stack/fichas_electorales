@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha A - Supervisión</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container animate-in">
+        <header style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <a href="index.html" class="btn btn-secondary">
+                ← Volver
+            </a>
+            <h2 style="margin:0; font-size: 1.2rem; color: var(--text-muted);">Ficha A</h2>
+        </header>
+
+        <form id="fichaForm">
+            <!-- SECTION 1: DATOS GENERALES -->
+            <div> <!-- Removed redundant card wrapper for section header to make flow cleaner -->
+                <h2 style="margin-bottom: 1rem;">1. Datos Generales</h2>
+            </div>
+
+            <div class="card">
+                <h3>Datos del Entrevistador</h3>
+                <div class="form-group">
+                    <label>1. OD/MOD u Oficina o Institución</label>
+                    <input type="text" name="q1" placeholder="Ingrese nombre..." required>
+                </div>
+                <div class="form-group">
+                    <label>2. Nombre del Comisionado Entrevistador</label>
+                    <input type="text" name="q2" required>
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>3. Tipo de Documento</label>
+                        <select name="q3">
+                            <option value="DNI">DNI</option>
+                            <option value="Carnet Extranjería">Carnet Extranjería</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>4. Nro. de documento</label>
+                        <input type="text" name="q4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>5. Teléfono – Anexo o Celular</label>
+                    <input type="text" name="q5">
+                </div>
+                <div class="form-group">
+                    <label>6. Correo electrónico Institucional</label>
+                    <input type="email" name="q6">
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>7. Fecha de inicio</label><input type="date" name="q7"
+                            value="2025-12-07"></div>
+                    <div class="form-group"><label>8. Hora de inicio</label><input type="time" name="q8"></div>
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>9. Fecha de fin</label><input type="date" name="q9"
+                            value="2025-12-07"></div>
+                    <div class="form-group"><label>10. Hora de término</label><input type="time" name="q10"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Datos del Local de Votación</h3>
+                <div class="form-group">
+                    <label>11. Nombre del local de votación</label>
+                    <input type="text" name="q11">
+                </div>
+                <div class="form-group">
+                    <label>12. Ubicación del local de votación (región)</label>
+                    <input type="text" name="q12">
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>13. N° Total Mesas</label><input type="number" name="q13"></div>
+                    <div class="form-group"><label>14. N° Total Electores</label><input type="number" name="q14"></div>
+                </div>
+                <div class="form-group">
+                    <label>15. Organizaciones políticas (OP)</label>
+                    <textarea name="q15" rows="2" placeholder="Liste las organizaciones..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>16. Nombre coordinador ONPE</label>
+                    <input type="text" name="q16">
+                </div>
+                <div class="form-group">
+                    <label>17. Celular</label>
+                    <input type="text" name="q17">
+                </div>
+            </div>
+
+            <!-- SECTION 2: ANTES DE LA INSTALACIÓN -->
+            <h2 style="margin-top:2rem; margin-bottom: 1rem;">2. Antes de la Instalación</h2>
+            <div class="card">
+                <h3>A. Condiciones del Local</h3>
+
+                <div class="form-group">
+                    <label>18. ¿Observó los siguientes elementos al ingresar?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q18[]"
+                                value="Rampas"><span>Rampas</span></label>
+                        <label class="option-card"><input type="checkbox" name="q18[]"
+                                value="Barandas"><span>Barandas</span></label>
+                        <label class="option-card"><input type="checkbox" name="q18[]"
+                                value="Ninguno"><span>Ninguno</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>19. ¿El local cuenta con suministro eléctrico?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q19" value="Si"
+                                id="q19-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q19" value="No"
+                                id="q19-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="q20-container">
+                    <label>20. Contingencia para conteo de votos</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q20[]"
+                                value="Grupo electrógeno"><span>Grupo electrógeno</span></label>
+                        <label class="option-card"><input type="checkbox" name="q20[]"
+                                value="Luces de emergencia"><span>Luces de emergencia</span></label>
+                        <label class="option-card"><input type="checkbox" name="q20[]"
+                                value="Otro"><span>Otro</span></label>
+                        <label class="option-card"><input type="checkbox" name="q20[]"
+                                value="Ninguno"><span>Ninguno</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>21. ¿El local cuenta con agua potable?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q21" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q21" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>22. ¿SSHH en funcionamiento?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q22" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q22" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>23. ¿Afectado por peligro natural (lluvias, etc)?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q23" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q23" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>24. ¿Carpas presentan daños?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="q24" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q24" value="No"><span>No</span></label>
+                        <label class="option-card"><input type="radio" name="q24" value="No aplica"><span>No
+                                aplica</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>25. ¿Señalización visible para...?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q25[]" value="Mesas"><span>Mesas
+                                sufragio</span></label>
+                        <label class="option-card"><input type="checkbox" name="q25[]"
+                                value="SSHH"><span>SSHH</span></label>
+                        <label class="option-card"><input type="checkbox" name="q25[]" value="Salidas"><span>Salidas
+                                emergencia</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>26. ¿Anuncios fáciles de comprender?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q26" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q26" value="No"><span>No</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>B. Material Electoral</h3>
+                <div class="form-group">
+                    <label>27. ¿Ha llegado el material electoral?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q27" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q27" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>28. ¿Información accesible y sencilla?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q28" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q28" value="No"><span>No</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: ENTREVISTA COORDINADOR -->
+            <h2 style="margin-top:2rem; margin-bottom: 1rem;">3. Entrevista al Coordinador</h2>
+            <div class="card">
+                <div class="form-group">
+                    <label>29. ¿Personal para asistencia técnica (STAE)?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q29" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q29" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>30. ¿Capacitación para grupos vulnerables?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q30[]" value="Trans"><span>Pers.
+                                Trans</span></label>
+                        <label class="option-card"><input type="checkbox" name="q30[]" value="Indigenas"><span>P.
+                                Indígenas</span></label>
+                        <label class="option-card"><input type="checkbox" name="q30[]" value="Adultos Mayores"><span>Ad.
+                                Mayores</span></label>
+                        <label class="option-card"><input type="checkbox" name="q30[]" value="Discapacidad"><span>P.
+                                Discapacidad</span></label>
+                        <label class="option-card"><input type="checkbox" name="q30[]"
+                                value="Ninguna"><span>Ninguna</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>31. ¿Capacitación frente a violencia?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q31" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q31" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>32. ¿Gestión previa para violencia?</label>
+                    <textarea name="q32" rows="2" placeholder="Describa..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>33. ¿Cuenta con plantillas Braille?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q33" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q33" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>34. ¿Intérprete de lengua de señas?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q34" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q34" value="No"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>35. ¿Personas con discapacidad en registro?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q35" value="Si"
+                                id="q35-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q35" value="No"
+                                id="q35-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div id="q36-37-container">
+                    <div class="form-group">
+                        <label>36. Tipo de discapacidad</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q36[]"
+                                    value="Fisica"><span>Física</span></label>
+                            <label class="option-card"><input type="checkbox" name="q36[]"
+                                    value="Sensorial"><span>Sensorial</span></label>
+                            <label class="option-card"><input type="checkbox" name="q36[]"
+                                    value="Intelectual"><span>Intelectual</span></label>
+                            <label class="option-card"><input type="checkbox" name="q36[]"
+                                    value="Psicosocial"><span>Psicosocial</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>37. ¿Mesas especiales previstas?</label>
+                        <div class="options-grid yes-no">
+                            <label class="option-card"><input type="radio" name="q37" value="Si"><span>Sí</span></label>
+                            <label class="option-card"><input type="radio" name="q37" value="No"><span>No</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>38. ¿Se capacitó a miembros de mesa?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q38" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q38" value="No"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>39. COMENTARIOS FINALES</label>
+                    <textarea name="q39" rows="4"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; margin-top: 1rem;">Guardar
+                    Ficha</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

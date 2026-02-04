@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha B - Supervisión</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container animate-in">
+        <header style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <a href="index.html" class="btn btn-secondary">
+                ← Volver
+            </a>
+            <h2 style="margin:0; font-size: 1.2rem; color: var(--text-muted);">Ficha B</h2>
+        </header>
+
+        <form id="fichaFormB">
+            <!-- SECTION 1: DATOS GENERALES -->
+            <div>
+                <h2 style="margin-bottom: 1rem;">1. Datos Generales</h2>
+            </div>
+
+            <div class="card">
+                <h3>Datos del Entrevistador</h3>
+                <div class="form-group"><label>1. OD/MOD u Oficina</label><input type="text" name="q1" required></div>
+                <div class="form-group"><label>2. Nombre Comisionado</label><input type="text" name="q2" required></div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>3. Tipo Documento</label><select name="q3">
+                            <option>DNI</option>
+                            <option>Carnet</option>
+                        </select></div>
+                    <div class="form-group"><label>4. Nro Documento</label><input type="text" name="q4"></div>
+                </div>
+                <div class="form-group"><label>5. Teléfono</label><input type="text" name="q5"></div>
+                <div class="form-group"><label>6. Email</label><input type="email" name="q6"></div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>7. Fecha Inicio</label><input type="date" name="q7"
+                            value="2025-12-07"></div>
+                    <div class="form-group"><label>8. Hora Inicio</label><input type="time" name="q8"></div>
+                </div>
+                <!-- Q9, Q10 are End times, usually filled later, but including for completeness -->
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>9. Fecha Fin</label><input type="date" name="q9" value="2025-12-07">
+                    </div>
+                    <div class="form-group"><label>10. Hora Término</label><input type="time" name="q10"></div>
+                </div>
+                <div class="form-group"><label>11. Nombre Local Votación</label><input type="text" name="q11"></div>
+            </div>
+
+            <!-- SECTION 2: DURANTE EL SUFRAGIO -->
+            <h2 style="margin-top:2rem; margin-bottom: 1rem;">2. Durante el Sufragio</h2>
+
+            <!-- A. EJERCICIO DEL VOTO -->
+            <div class="card">
+                <h3>A. Ejercicio del Voto</h3>
+
+                <div class="form-group">
+                    <label>12. ¿Se retrasó la instalación de mesas?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q12" value="Si"
+                                id="q12-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q12" value="No"
+                                id="q12-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="q13-container">
+                    <label>13. Razón del retraso</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q13[]"
+                                value="Falta material"><span>Falta material</span></label>
+                        <label class="option-card"><input type="checkbox" name="q13[]"
+                                value="Ausencia miembros"><span>Ausencia miembros</span></label>
+                        <label class="option-card"><input type="checkbox" name="q13[]"
+                                value="Otros"><span>Otros</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>14. Instituciones presentes</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q14[]"
+                                value="ODPE"><span>ODPE</span></label>
+                        <label class="option-card"><input type="checkbox" name="q14[]"
+                                value="JNE"><span>JNE</span></label>
+                        <label class="option-card"><input type="checkbox" name="q14[]" value="Fiscalia"><span>Ministerio
+                                Público</span></label>
+                        <label class="option-card"><input type="checkbox" name="q14[]"
+                                value="FFAA"><span>FFAA</span></label>
+                        <label class="option-card"><input type="checkbox" name="q14[]"
+                                value="PNP"><span>PNP</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>15. ¿FFAA/PNP fuera del local?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q15" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q15" value="No"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>16. ¿Electores detenidos?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q16" value="Si"
+                                id="q16-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q16" value="No"
+                                id="q16-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="q17-container">
+                    <label>17. Nro detenidos (Antes/Despues)</label>
+                    <!-- Simplified for UI -->
+                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <input type="number" name="q17_antes" placeholder="Antes">
+                        <input type="number" name="q17_despues" placeholder="Después">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>18. ¿Presencia de personeros?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q18" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q18" value="No"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>19. Total miembros de mesa</label>
+                    <input type="number" name="q19">
+                </div>
+                <div class="form-group">
+                    <label>20. ¿Cuántos recibieron capacitación?</label>
+                    <input type="number" name="q20" id="q20-input">
+                </div>
+
+                <div class="form-group" id="q21-container">
+                    <label>21. ¿Quién capacitó?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q21[]"
+                                value="ONPE"><span>ONPE</span></label>
+                        <label class="option-card"><input type="checkbox" name="q21[]"
+                                value="Personero"><span>Personero</span></label>
+                        <label class="option-card"><input type="checkbox" name="q21[]"
+                                value="Otro"><span>Otro</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>22. ¿Trato desigual a precandidatos?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q22" value="Si"
+                                id="q22-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q22" value="No"
+                                id="q22-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div id="q23-container">
+                    <div class="form-group">
+                        <label>23. Tipo de trato desigual</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q23[]"
+                                    value="Restriccion"><span>Restricción</span></label>
+                            <label class="option-card"><input type="checkbox" name="q23[]"
+                                    value="Ubicacion"><span>Ubicación</span></label>
+                            <label class="option-card"><input type="checkbox" name="q23[]"
+                                    value="Discriminacion"><span>Discriminación</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. INCIDENCIAS -->
+            <div class="card">
+                <h3>B. Incidencias Observadas</h3>
+                <div class="form-group">
+                    <label>24. ¿Desacuerdos/impugnaciones?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q24" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q24" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group"><label>25. Observación</label><textarea name="q25"></textarea></div>
+
+                <div class="form-group">
+                    <label>26. ¿Discrepancias contra órganos electorales?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q26" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q26" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>27. ¿Cuestionamientos a transparencia?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q27" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q27" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>28. ¿Retiro injustificado del padrón?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q28" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q28" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>29. ¿Afiliado no aparecía en padrón?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q29" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q29" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>30. ¿Protestas sociales?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q30" value="Si"
+                                id="q30-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q30" value="No"
+                                id="q30-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div id="q31-32-container">
+                    <div class="form-group">
+                        <label>31. Tipos de violencia/protesta</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q31[]"
+                                    value="Agresiones"><span>Agresiones</span></label>
+                            <label class="option-card"><input type="checkbox" name="q31[]"
+                                    value="Enfrentamientos"><span>Enfrentamientos</span></label>
+                            <label class="option-card"><input type="checkbox" name="q31[]"
+                                    value="Atentado"><span>Atentado</span></label>
+                            <label class="option-card"><input type="checkbox" name="q31[]" value="Material"><span>Daño
+                                    Material</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>32. Detalles protesta</label><textarea name="q32"></textarea></div>
+                </div>
+
+                <div class="form-group">
+                    <label>33. ¿Elector impedido de votar?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q33" value="Si"
+                                id="q33-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q33" value="No"
+                                id="q33-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div id="q34-35-container">
+                    <div class="form-group"><label>34. ¿Se explicaron motivos?</label>
+                        <div class="options-grid yes-no"><label class="option-card"><input type="radio" name="q34"
+                                    value="Si"><span>Sí</span></label><label class="option-card"><input type="radio"
+                                    name="q34" value="No"><span>No</span></label></div>
+                    </div>
+                    <div class="form-group">
+                        <label>35. Razón impedimento</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q35[]"
+                                    value="Exclusion"><span>Exclusión</span></label>
+                            <label class="option-card"><input type="checkbox" name="q35[]"
+                                    value="Local Incorrecto"><span>Mal Local</span></label>
+                            <label class="option-card"><input type="checkbox" name="q35[]"
+                                    value="Afiliacion"><span>Afiliación</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C. PARTICIPACION MUJERES -->
+            <div class="card">
+                <h3>C. Participación Política Mujeres</h3>
+                <div class="form-group">
+                    <label>36. ¿Violencia contra la mujer?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q36" value="Si"
+                                id="q36-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q36" value="No"
+                                id="q36-no"><span>No</span></label>
+                    </div>
+                </div>
+                <!-- Q37-39 Simplified as comments/details if Yes -->
+                <div id="q37-39-container" class="hidden">
+                    <div class="form-group"><label>37-39. Detalles de violencia</label><textarea name="q37_39_details"
+                            placeholder="Describa agraviada, tipo de violencia y autoridades..."></textarea></div>
+                </div>
+
+                <div class="form-group">
+                    <label>40. ¿Mujeres sufragantes con niños?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q40" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q40" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>41. ¿Miembros mesa con niños?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q41" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q41" value="No"><span>No</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. VOTO VULNERABLES -->
+            <div class="card">
+                <h3>D. Voto Grupos Vulnerables</h3>
+                <div class="form-group">
+                    <label>42. ¿Plantillas Braille disponibles?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q42" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q42" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>43. ¿Módulos temporales pisos bajos?</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="q43" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q43" value="No"><span>No</span></label>
+                        <label class="option-card"><input type="radio" name="q43" value="No Necesario"><span>No
+                                nec.</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>44. ¿Se impidió voto con acompañante?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q44" value="Si"
+                                id="q44-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q44" value="No"
+                                id="q44-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div id="q45-46-container">
+                    <div class="form-group">
+                        <label>45. Institución interviniente</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q45[]"
+                                    value="ODPE"><span>ODPE</span></label>
+                            <label class="option-card"><input type="checkbox" name="q45[]"
+                                    value="JNE"><span>JNE</span></label>
+                            <label class="option-card"><input type="checkbox" name="q45[]"
+                                    value="PNP"><span>PNP</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>46. Observación</label><textarea name="q46"></textarea></div>
+                </div>
+
+                <div class="form-group">
+                    <label>47. ¿Se impidio ingreso perro guia?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q47" value="Si"
+                                id="q47-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q47" value="No"
+                                id="q47-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div id="q48-49-container">
+                    <div class="form-group">
+                        <label>48. Institución interviniente</label>
+                        <div class="options-grid">
+                            <label class="option-card"><input type="checkbox" name="q48[]"
+                                    value="ODPE"><span>ODPE</span></label>
+                            <label class="option-card"><input type="checkbox" name="q48[]"
+                                    value="JNE"><span>JNE</span></label>
+                            <label class="option-card"><input type="checkbox" name="q48[]"
+                                    value="PNP"><span>PNP</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>50. ¿Se omitió atención preferente?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q50" value="Si"
+                                id="q50-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q50" value="No"
+                                id="q50-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div id="q51-container">
+                    <div class="form-group"><label>51. Grupos afectados (Detallar)</label><textarea name="q51"
+                            placeholder="Niños, Adultos mayores, etc..."></textarea></div>
+                </div>
+
+                <div class="form-group">
+                    <label>52. ¿Maltrato a vulnerables?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q52" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q52" value="No"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>53. Observación/Comentarios Finales</label>
+                    <textarea name="q53" rows="4"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; margin-top: 1rem;">Guardar
+                    Ficha B</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

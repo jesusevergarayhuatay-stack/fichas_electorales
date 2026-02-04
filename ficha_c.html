@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha C - Supervisión</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container animate-in">
+        <header style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <a href="index.html" class="btn btn-secondary">
+                ← Volver
+            </a>
+            <h2 style="margin:0; font-size: 1.2rem; color: var(--text-muted);">Ficha C</h2>
+        </header>
+
+        <form id="fichaFormC">
+            <!-- SECTION 1: DATOS GENERALES -->
+            <div>
+                <h2 style="margin-bottom: 1rem;">1. Datos Generales</h2>
+            </div>
+
+            <div class="card">
+                <h3>Datos del Entrevistador</h3>
+                <div class="form-group"><label>1. OD/MOD u Oficina</label><input type="text" name="q1" required></div>
+                <div class="form-group"><label>2. Nombre Comisionado</label><input type="text" name="q2" required></div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>3. Tipo Documento</label><select name="q3">
+                            <option>DNI</option>
+                            <option>Carnet</option>
+                        </select></div>
+                    <div class="form-group"><label>4. Nro Documento</label><input type="text" name="q4"></div>
+                </div>
+                <div class="form-group"><label>5. Teléfono</label><input type="text" name="q5"></div>
+                <div class="form-group"><label>6. Email</label><input type="email" name="q6"></div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>7. Fecha Inicio</label><input type="date" name="q7"
+                            value="2025-12-07"></div>
+                    <div class="form-group"><label>8. Hora Inicio</label><input type="time" name="q8"></div>
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group"><label>9. Fecha Fin</label><input type="date" name="q9" value="2025-12-07">
+                    </div>
+                    <div class="form-group"><label>10. Hora Término</label><input type="time" name="q10"></div>
+                </div>
+                <div class="form-group"><label>11. Nombre Local Votación</label><input type="text" name="q11"></div>
+            </div>
+
+            <!-- SECTION 2: CONTEO DE VOTOS -->
+            <h2 style="margin-top:2rem; margin-bottom: 1rem;">2. Conteo de Votos</h2>
+
+            <div class="card">
+                <h3>A. Transparencia e Imparcialidad</h3>
+
+                <div class="form-group">
+                    <label>12. Instituciones presentes conteo</label>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="q12[]"
+                                value="ODPE"><span>ODPE</span></label>
+                        <label class="option-card"><input type="checkbox" name="q12[]"
+                                value="JNE"><span>JNE</span></label>
+                        <label class="option-card"><input type="checkbox" name="q12[]" value="Fiscalia"><span>Ministerio
+                                P.</span></label>
+                        <label class="option-card"><input type="checkbox" name="q12[]"
+                                value="FFAA"><span>FFAA</span></label>
+                        <label class="option-card"><input type="checkbox" name="q12[]"
+                                value="PNP"><span>PNP</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>13. ¿Personeros presentes?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q13" value="Si"
+                                id="q13-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q13" value="No"
+                                id="q13-no"><span>No</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="q14-15-container">
+                    <label>14. ¿Se impidió participación personero?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q14" value="Si"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q14" value="No"><span>No</span></label>
+                    </div>
+                    <div class="form-group" style="margin-top:10px;"><label>15. Motivo impedimento</label><textarea
+                            name="q15"></textarea></div>
+                </div>
+
+                <div class="form-group">
+                    <label>16. ¿Comportamiento parcial de ONPE?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q16" value="Si"
+                                id="q16-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q16" value="No"
+                                id="q16-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q17-container">
+                    <label>17. Describa comportamiento</label>
+                    <textarea name="q17"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>18. ¿Dudas sobre imparcialidad?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q18" value="Si"
+                                id="q18-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q18" value="No"
+                                id="q18-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q19-container">
+                    <label>19. Describa cuestionamiento</label>
+                    <textarea name="q19"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>20. ¿Discrepancia votos/registros?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q20" value="Si"
+                                id="q20-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q20" value="No"
+                                id="q20-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q21-container">
+                    <label>21. Número votos diferencia</label>
+                    <input type="number" name="q21">
+                </div>
+
+                <div class="form-group">
+                    <label>22. ¿Se impugnó algún voto?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q22" value="Si"
+                                id="q22-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q22" value="No"
+                                id="q22-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q23-container">
+                    <label>23. Cantidad votos impugnados</label>
+                    <input type="number" name="q23">
+                </div>
+
+                <div class="form-group">
+                    <label>24. ¿Intervención externa?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q24" value="Si"
+                                id="q24-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q24" value="No"
+                                id="q24-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q25-container">
+                    <label>25. Describa intervención</label>
+                    <textarea name="q25"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>26. ¿Resultados comunicados oportunos?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q26" value="Si"
+                                id="q26-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q26" value="No"
+                                id="q26-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q27-container">
+                    <label>27. Razón no oportuna</label>
+                    <textarea name="q27"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>28. ¿Personal ONPE cumplió funciones?</label>
+                    <div class="options-grid yes-no">
+                        <label class="option-card"><input type="radio" name="q28" value="Si"
+                                id="q28-yes"><span>Sí</span></label>
+                        <label class="option-card"><input type="radio" name="q28" value="No"
+                                id="q28-no"><span>No</span></label>
+                    </div>
+                </div>
+                <div class="form-group" id="q29-container">
+                    <label>29. Razón incumplimiento</label>
+                    <textarea name="q29"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>COMENTARIOS FINALES</label>
+                    <textarea name="comments" rows="4"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; margin-top: 1rem;">Guardar
+                    Ficha C</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
