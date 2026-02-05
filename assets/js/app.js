@@ -220,15 +220,39 @@ document.addEventListener('DOMContentLoaded', () => {
         doc.setFontSize(10);
 
         for (const [key, value] of formData.entries()) {
-            if (key.includes('signature') || key.includes('signer')) continue; // Handle signatures manually
+            if (key.includes('signature') || key.includes('signer')) continue;
 
-            // Basic layout
+            // Layout check
             if (y > pageHeight - 30) {
                 doc.addPage();
                 y = 20;
             }
-            // Simple key-value dump for MVP
-            const text = `${key}: ${value}`;
+
+            // FIND LABEL
+            let labelText = key;
+            const el = document.getElementsByName(key)[0];
+            if (el) {
+                const group = el.closest('.form-group');
+                if (group) {
+                    const label = group.querySelector('label');
+                    if (label) {
+                        labelText = label.innerText.trim();
+                        // Remove numbering if desired, or keep it. User asked for Question Text.
+                    }
+                }
+            } else if (key.includes('[]')) {
+                // Try to find array element
+                const arrEl = document.getElementsByName(key)[0];
+                if (arrEl) {
+                    const group = arrEl.closest('.form-group');
+                    if (group) {
+                        const label = group.querySelector('label');
+                        if (label) labelText = label.innerText.trim();
+                    }
+                }
+            }
+
+            const text = `${labelText}: ${value}`;
             const splitText = doc.splitTextToSize(text, 180);
             doc.text(splitText, 15, y);
             y += (7 * splitText.length);
