@@ -302,6 +302,40 @@
                 </div>
             </div>
 
+            <!-- SECTION 4: CONFORMIDAD Y FIRMA -->
+            <div class="card">
+                <h2>4. Conformidad y Firma Digital</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                    Por favor, ingrese sus datos para habilitar el recuadro de firma.
+                </p>
+
+                <div class="form-group">
+                    <label>Nombre del Responsable</label>
+                    <input type="text" id="signer-name" name="signer_name" placeholder="Ingrese nombre completo"
+                        required>
+                </div>
+                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Institución</label>
+                        <input type="text" id="signer-inst" name="signer_inst" placeholder="Ej. Defensoría" required>
+                    </div>
+                    <div class="form-group">
+                        <label>DNI</label>
+                        <input type="text" id="signer-dni" name="signer_dni" placeholder="8 dígitos" maxlength="8"
+                            required>
+                    </div>
+                </div>
+
+                <div class="signature-container disabled" id="sig-container">
+                    <label>Firme aquí (Trazo en pantalla)</label>
+                    <canvas id="signature-pad" width="300" height="150"></canvas>
+                    <button type="button" id="clear-sig" class="btn-secondary"
+                        style="width: 100%; margin-top: 5px;">Limpiar Firma</button>
+                    <!-- Hidden input to store base64 signature -->
+                    <input type="hidden" name="signature_data" id="signature-data">
+                </div>
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; margin-top: 1rem;">Guardar
                     Ficha</button>
