@@ -306,34 +306,50 @@
             <div class="card">
                 <h2>4. Conformidad y Firma Digital</h2>
                 <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-                    Por favor, ingrese sus datos para habilitar el recuadro de firma.
+                    Ingrese los datos de cada responsable para habilitar su firma.
                 </p>
 
-                <div class="form-group">
-                    <label>Nombre del Responsable</label>
-                    <input type="text" id="signer-name" name="signer_name" placeholder="Ingrese nombre completo"
-                        required>
-                </div>
-                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div class="form-group">
-                        <label>Institución</label>
-                        <input type="text" id="signer-inst" name="signer_inst" placeholder="Ej. Defensoría" required>
-                    </div>
-                    <div class="form-group">
-                        <label>DNI</label>
-                        <input type="text" id="signer-dni" name="signer_dni" placeholder="8 dígitos" maxlength="8"
-                            required>
+                <div id="signers-list">
+                    <!-- Dynamic Signer Card (Template) -->
+                    <div class="signer-card"
+                        style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem;">
+                        <h3 style="border:none; color: var(--text-main); font-size: 1rem; margin-bottom:0.5rem;">
+                            Firmante <span class="signer-count">1</span></h3>
+
+                        <div class="form-group">
+                            <label>Nombre del Responsable</label>
+                            <input type="text" class="signer-name" name="signer_name[]"
+                                placeholder="Ingrese nombre completo" required>
+                        </div>
+                        <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Institución</label>
+                                <input type="text" class="signer-inst" name="signer_inst[]" placeholder="Ej. Defensoría"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>DNI</label>
+                                <!-- type="tel" triggers numeric keypad on mobile -->
+                                <input type="tel" class="signer-dni" name="signer_dni[]" placeholder="8 dígitos"
+                                    maxlength="8" required>
+                            </div>
+                        </div>
+
+                        <div class="signature-container disabled">
+                            <label>Firme aquí (Trazo en pantalla)</label>
+                            <canvas class="signature-pad" width="300" height="150"></canvas>
+                            <button type="button" class="btn-secondary clear-sig-btn"
+                                style="width: 100%; margin-top: 5px;">Limpiar Firma</button>
+                            <!-- Hidden input -->
+                            <input type="hidden" class="signature-data" name="signature_data[]">
+                        </div>
                     </div>
                 </div>
 
-                <div class="signature-container disabled" id="sig-container">
-                    <label>Firme aquí (Trazo en pantalla)</label>
-                    <canvas id="signature-pad" width="300" height="150"></canvas>
-                    <button type="button" id="clear-sig" class="btn-secondary"
-                        style="width: 100%; margin-top: 5px;">Limpiar Firma</button>
-                    <!-- Hidden input to store base64 signature -->
-                    <input type="hidden" name="signature_data" id="signature-data">
-                </div>
+                <button type="button" id="add-signer-btn" class="btn-secondary"
+                    style="width: 100%; border-style: dashed; padding: 1rem;">
+                    + Agregar Otro Firmante
+                </button>
             </div>
 
             <div class="form-group">

@@ -1,40 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // HELPER: Toggles visibility based on radio/input value
-    // If triggerElement is checked/matches value, hide target. Else show. or vice versa.
-    // We'll make specific logic functions for each case to be safe.
-
     const toggle = (triggerId, targetId, showIfChecked) => {
-        const trigger = document.getElementById(triggerId);
-        const target = document.getElementById(targetId);
-        if (!trigger || !target) return;
-
-        const check = () => {
-            if (trigger.checked === showIfChecked) {
-                target.classList.remove('hidden');
-            } else {
-                target.classList.add('hidden');
-            }
-        };
-        // Find all radios with same name to attach listener
-        const name = trigger.name;
-        document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.addEventListener('change', check));
-        check(); // Init
+        // ... kept for ref if needed
     };
 
     /* --- FICHA A LOGIC --- */
-    toggle('q19-yes', 'q20-container', false); // Si hay luz (Yes), Oculta contigencia (Yes=false show) -> Wait. No.
-    // Q19 Yes -> Hide Q20. 
-    // Logic: if Yes checked, add hidden. 
-    // My helper is "showIfChecked". So false.
-
-    toggle('q35-no', 'q36-37-container', false); // If No, hide 36-37. So showIfChecked=false (Hide if checked).
-    // Wait helper logic: if(checked === showIfChecked) remove hidden.
-    // Q35 No checked. showIfChecked=false -> false===false -> remove hidden (Show). WRONG.
-
-    // Let's rewrite manual listeners for clarity, simpler than abstraction for complex cases.
-
-    // FICHA A
     const fA_q19yes = document.getElementById('q19-yes');
     if (fA_q19yes) {
         const cont = document.getElementById('q20-container');
@@ -50,19 +21,163 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     }
 
+    /* --- MULTIPLE SIGNERS LOGIC (Refactored) --- */
+    const signersList = document.getElementById('signers-list');
+
+    if (signersList) {
+
+        // Function to initialize a single signer card
+        const initSignerCard = (card) => {
+            const canvas = card.querySelector('.signature-pad');
+            const clearBtn = card.querySelector('.clear-sig-btn');
+            const sigContainer = card.querySelector('.signature-container');
+            const hiddenInput = card.querySelector('.signature-data');
+
+            // Inputs
+            const sName = card.querySelector('.signer-name');
+            const sInst = card.querySelector('.signer-inst');
+            const sDni = card.querySelector('.signer-dni');
+
+            if (!canvas) return; // Safety
+
+            const ctx = canvas.getContext('2d');
+            let painting = false;
+
+            // Correct sizing
+            const resizeCanvas = () => {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                // We store the visual width to avoid exploding canvas on multiple resizes
+                const rect = canvas.getBoundingClientRect();
+                if (rect.width > 0) {
+                    canvas.width = rect.width * ratio;
+                    canvas.height = 200 * ratio; // Fixed height logic
+                    ctx.scale(ratio, ratio);
+                }
+            };
+            // Initial resize
+            // We delay slightly to ensure DOM render
+            setTimeout(resizeCanvas, 100);
+
+            // Drawing Functions
+            function startPosition(e) {
+                painting = true;
+                draw(e);
+            }
+            function finishedPosition() {
+                painting = false;
+                ctx.beginPath();
+                hiddenInput.value = canvas.toDataURL();
+            }
+            function draw(e) {
+                if (!painting) return;
+                // preventDefault ONLY if target is canvas to allow scrolling elsewhere
+                if (e.cancelable) e.preventDefault();
+
+                let clientX, clientY;
+                if (e.type.includes('touch')) {
+                    const touch = e.touches[0];
+                    clientX = touch.clientX;
+                    clientY = touch.clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                const rect = canvas.getBoundingClientRect();
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#fff';
+
+                ctx.lineTo(clientX - rect.left, clientY - rect.top);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(clientX - rect.left, clientY - rect.top);
+            }
+
+            // Events
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', finishedPosition);
+            canvas.addEventListener('mousemove', draw);
+
+            canvas.addEventListener('touchstart', startPosition, { passive: false });
+            canvas.addEventListener('touchend', finishedPosition);
+            canvas.addEventListener('touchmove', draw, { passive: false });
+
+            // Clear
+            clearBtn.addEventListener('click', () => {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                ctx.clearRect(0, 0, canvas.width / ratio, canvas.height / ratio); // visual clear
+                canvas.width = canvas.width; // Reset validation hack
+                resizeCanvas(); // Re-scale
+                hiddenInput.value = '';
+            });
+
+            // Validation logic
+            const checkFields = () => {
+                // More robust check logic for mobile (trimmed, length)
+                const nameOk = sName.value.trim().length > 2;
+                const instOk = sInst.value.trim().length > 2;
+                // For DNI, just check it has some value (len > 4) to be friendly
+                const dniOk = sDni.value.trim().length >= 6;
+
+                if (nameOk && instOk && dniOk) {
+                    sigContainer.classList.remove('disabled');
+                } else {
+                    sigContainer.classList.add('disabled');
+                }
+            };
+
+            // Listen to multiple event types for mobile reliability
+            [sName, sInst, sDni].forEach(el => {
+                el.addEventListener('input', checkFields);
+                el.addEventListener('keyup', checkFields); // Extra safety
+                el.addEventListener('change', checkFields); // Autofill safety
+                el.addEventListener('blur', checkFields);
+            });
+        };
+
+        // Initialize existing cards (The first one)
+        const initialCards = signersList.querySelectorAll('.signer-card');
+        initialCards.forEach(initSignerCard);
+
+        // Add Button Logic
+        const addBtn = document.getElementById('add-signer-btn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                const count = signersList.querySelectorAll('.signer-card').length + 1;
+                // Clone the first card to keep structure
+                const original = signersList.querySelector('.signer-card');
+                const clone = original.cloneNode(true);
+
+                // Reset Clone Info
+                clone.querySelector('.signer-count').innerText = count;
+                clone.querySelectorAll('input').forEach(i => i.value = ''); // Clear inputs
+                clone.querySelector('.signature-container').classList.add('disabled'); // Re-disable
+
+                // Clear Canvas
+                const c = clone.querySelector('canvas');
+                const ctx = c.getContext('2d');
+                ctx.clearRect(0, 0, c.width, c.height);
+
+                // Append
+                signersList.appendChild(clone);
+
+                // Init Logic for new card
+                initSignerCard(clone);
+            });
+        }
+    }
+
 
     /* --- FICHA B LOGIC --- */
-    // Q12: Retraso Si -> Show Q13. No -> Hide Q13 (Pase a 14).
     const fB_q12no = document.getElementById('q12-no');
     if (fB_q12no) {
+        // ... (Ficha B logic same as before, condensed for brevity) ...
         const cont = document.getElementById('q13-container');
         document.querySelectorAll('input[name="q12"]').forEach(i => i.addEventListener('change', () => {
-            // If No checked, HIDE (Pase a 14 acts as skipping 13)
             if (fB_q12no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q16: Detenidos Si -> Show Q17. No -> Hide Q17.
     const fB_q16no = document.getElementById('q16-no');
     if (fB_q16no) {
         const cont = document.getElementById('q17-container');
@@ -70,8 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q16no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q20: Input number. If 0 -> Hide Q21. Else Show.
     const fB_q20 = document.getElementById('q20-input');
     if (fB_q20) {
         const cont = document.getElementById('q21-container');
@@ -79,8 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q20.value === '0' || fB_q20.value === '') cont.classList.add('hidden'); else cont.classList.remove('hidden');
         });
     }
-
-    // Q22: Desigual Si -> Show Q23. No -> Hide.
     const fB_q22no = document.getElementById('q22-no');
     if (fB_q22no) {
         const cont = document.getElementById('q23-container');
@@ -88,8 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q22no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q30: Protestas Si -> Show Q31-32. No -> Hide.
     const fB_q30no = document.getElementById('q30-no');
     if (fB_q30no) {
         const cont = document.getElementById('q31-32-container');
@@ -97,8 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q30no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q33: Impedido Si -> Show Q34-35. No -> Hide.
     const fB_q33no = document.getElementById('q33-no');
     if (fB_q33no) {
         const cont = document.getElementById('q34-35-container');
@@ -106,8 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q33no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q36: Violencia Mujer Si -> Show Q37-39. No -> Hide.
     const fB_q36no = document.getElementById('q36-no');
     if (fB_q36no) {
         const cont = document.getElementById('q37-39-container');
@@ -115,8 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q36no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q44: Impidio Acompanante Si -> Show Q45-46. No -> Hide.
     const fB_q44no = document.getElementById('q44-no');
     if (fB_q44no) {
         const cont = document.getElementById('q45-46-container');
@@ -124,8 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q44no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q47: Perro guia Si -> Show Q48-49. No -> Hide.
     const fB_q47no = document.getElementById('q47-no');
     if (fB_q47no) {
         const cont = document.getElementById('q48-49-container');
@@ -133,8 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fB_q47no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q50: Omitio atencion Si -> Show Q51. No -> Hide.
     const fB_q50no = document.getElementById('q50-no');
     if (fB_q50no) {
         const cont = document.getElementById('q51-container');
@@ -145,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* --- FICHA C LOGIC --- */
-    // Q13 Personeros Si -> Show Q14-15. No -> Hide.
     const fC_q13no = document.getElementById('q13-no');
     if (fC_q13no) {
         const cont = document.getElementById('q14-15-container');
@@ -153,8 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q13no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q16 Parcial Si -> Show Q17. No -> Hide.
     const fC_q16no = document.getElementById('q16-no');
     if (fC_q16no) {
         const cont = document.getElementById('q17-container');
@@ -162,8 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q16no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q18 Dudas Si -> Show Q19. No -> Hide.
     const fC_q18no = document.getElementById('q18-no');
     if (fC_q18no) {
         const cont = document.getElementById('q19-container');
@@ -171,8 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q18no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q20 Discrepancia Si -> Show Q21. No -> Hide.
     const fC_q20no = document.getElementById('q20-no');
     if (fC_q20no) {
         const cont = document.getElementById('q21-container');
@@ -180,8 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q20no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q22 Impugno Si -> Show Q23. No -> Hide.
     const fC_q22no = document.getElementById('q22-no');
     if (fC_q22no) {
         const cont = document.getElementById('q23-container');
@@ -189,8 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q22no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q24 Intervencion Si -> Show Q25. No -> Hide.
     const fC_q24no = document.getElementById('q24-no');
     if (fC_q24no) {
         const cont = document.getElementById('q25-container');
@@ -198,8 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q24no.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q26 Oportuno No -> Show Q27. Si -> Hide. (Inverse logic)
     const fC_q26yes = document.getElementById('q26-yes');
     if (fC_q26yes) {
         const cont = document.getElementById('q27-container');
@@ -207,8 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fC_q26yes.checked) cont.classList.add('hidden'); else cont.classList.remove('hidden');
         }));
     }
-
-    // Q28 Cumplio Si -> Hide 29. No -> Show 29. (Inverse logic)
     const fC_q28yes = document.getElementById('q28-yes');
     if (fC_q28yes) {
         const cont = document.getElementById('q29-container');
@@ -225,9 +309,16 @@ document.addEventListener('DOMContentLoaded', () => {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
 
+                // Final Console Log
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
-                console.log('Form Data:', data);
+
+                // Get all signatures if needed
+                const signatures = form.querySelectorAll('input[name="signature_data[]"]');
+                console.log('Submitting Form', data);
+                if (signatures.length) {
+                    console.log('Signatures Count:', signatures.length);
+                }
 
                 const btn = form.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
@@ -241,8 +332,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.background = '';
                     btn.classList.remove('animate-in');
                     form.reset();
-                    // trigger all listeners to reset view?
-                    // Ideally yes, but basic reset is ok for demo.
+                    // Clean Canvases
+                    const canvases = form.querySelectorAll('canvas');
+                    canvases.forEach(c => {
+                        const ctx = c.getContext('2d');
+                        ctx.clearRect(0, 0, c.width, c.height);
+                    });
+                    // Disable all signers
+                    form.querySelectorAll('.signature-container').forEach(sc => sc.classList.add('disabled'));
+
                     window.scrollTo(0, 0);
                 }, 2000);
             });
